@@ -9,6 +9,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.workoutTracker.entities.Category;
+import com.workoutTracker.entities.Workout;
+import com.workoutTracker.repos.WorkoutRepository;
+
 public class TestWorkout {
 	private EntityManager em;
 	WorkoutRepository obj =new WorkoutRepository();

@@ -9,6 +9,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.workoutTracker.entities.Role;
+import com.workoutTracker.entities.User_user;
+import com.workoutTracker.repos.UserRepository;
+
 public class UserTest {
 	private EntityManager em;
 	UserRepository obj =new UserRepository();

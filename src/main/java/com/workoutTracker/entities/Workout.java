@@ -1,4 +1,4 @@
-package com.workoutTracker;
+package com.workoutTracker.entities;
 
 
 import javax.persistence.CascadeType;
