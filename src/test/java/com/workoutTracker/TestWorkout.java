@@ -49,7 +49,7 @@ Workout wc4=new Workout("Using resistance band","this comes under strength categ
 		
 	}
 	//@Test
-	public void findWorkout() {		
-			obj.findWorkout("swimming");
+	public void FindWorkoutByTitle() {		
+			obj.FindWorkoutByTitle("swimming");
 	}
 	}

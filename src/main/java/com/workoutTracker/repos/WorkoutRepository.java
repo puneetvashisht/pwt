@@ -50,7 +50,7 @@ public class WorkoutRepository {
 			em.getTransaction().commit();
 		
 		}
-		public Workout findWorkout(String title)
+		public Workout FindWorkoutByTitle(String title)
 		{
 			TypedQuery<Workout> query = em.createQuery("SELECT w FROM Workout w where w.workout=:title ", Workout.class);
 			query.setParameter("title",title);
