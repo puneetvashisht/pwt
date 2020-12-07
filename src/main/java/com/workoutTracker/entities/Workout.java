@@ -31,6 +31,11 @@ private Category category;
 		this.cbpm = cbpm;
 		this.category=category;
 	}
+	
+	
+	public int getId() {
+		return id;
+	}
 	public String getTitle() {
 		return title;
 	}
