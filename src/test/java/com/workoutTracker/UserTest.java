@@ -12,15 +12,7 @@ import org.junit.Test;
 public class UserTest {
 	private EntityManager em;
 	UserRepository obj =new UserRepository();
-	Role role= new Role("admin");
-	Role role1=new Role("user");
-	Role role2= new Role("trainer");
 	
-
-	User_user user = new User_user("murali@123","murali123",21,23,role);
-	User_user user1 = new User_user("jacky@123","chan123",44,11,role1);
-	User_user user2 = new User_user("Bruce@123","lee123",77,43,role2);
-	User_user user3 = new User_user("jack@123","maa123",21,23,role);
 //	@Before
 //	public void setUp() { 
 //		EntityManagerFactory emf = Persistence
@@ -33,6 +25,16 @@ public class UserTest {
 	public void addUser()
 	{
 		
+		Role role= new Role("admin");
+		Role role1=new Role("user");
+		Role role2= new Role("trainer");
+		
+
+		User_user user = new User_user("murali@123","murali123",21,23,role);
+		User_user user1 = new User_user("jacky@123","chan123",44,11,role1);
+		User_user user2 = new User_user("Bruce@123","lee123",77,43,role2);
+		User_user user3 = new User_user("jack@123","maa123",21,23,role);
+		
 		obj.addUser(user);
 		obj.addUser(user1);
 		obj.addUser(user2);
@@ -42,7 +44,7 @@ public class UserTest {
 	//@Test
 	public void editUser()
 	{
-		obj.editUser(user);
+//		obj.editUser(user);
 	}
 	//@Test
 	public void deleteUser()
