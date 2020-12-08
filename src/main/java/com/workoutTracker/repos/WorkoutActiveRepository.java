@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-
+import com.workoutTracker.entities.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import java.time.*;
 import java.util.Iterator;
 import java.util.List;
 public class WorkoutActiveRepository {
+	WokoutActiveService serv = new WokoutActiveService();
 	
 	private EntityManager em;
 
@@ -43,7 +44,7 @@ public class WorkoutActiveRepository {
 
 
 	public void StartWorkout(int id) {		
-		WorkoutTracker esc = em.find(WorkoutTracker.class, id);
+		WorkoutTracker esc = em.find(WorkoutTracker.class,id);
 		
 		em.getTransaction().begin();
 		 LocalTime lt 
@@ -73,28 +74,17 @@ public class WorkoutActiveRepository {
 
 	public void Total_Calories(int id) throws ParseException {
 		WorkoutTracker esc = em.find(WorkoutTracker.class, id);
+		
 		String a = esc.getStart_datetime();
 		String b =esc.getEnd_datetime();
-		long c = esc.calculateCalories(a,b);
+		long diff = serv.timeDifference(a,b);
+
 		em.getTransaction().begin();
 		
-		if(c>120) {
-	if(c>3600) {
-		esc.setTota_calories_burnt("25");
-	}else if(c>2400) {
-		esc.setTota_calories_burnt("17.5");
-	}
-	else if(c>1200) {
-		esc.setTota_calories_burnt("12");
-	}
-	else if(c>600) {
-		esc.setTota_calories_burnt("6");
-	}
-		}
-	else {
-		esc.setTota_calories_burnt("1");
+		int calories = serv.calculateCalories(diff/60);
 		
-	}
+		esc.setTotal_calories_burnt(calories);
+		
 		
 		em.getTransaction().commit();
 	}

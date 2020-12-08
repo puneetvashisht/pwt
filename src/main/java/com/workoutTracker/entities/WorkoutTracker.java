@@ -26,7 +26,7 @@ public class WorkoutTracker {
      String user_email;
      String start_datetime;
      String end_datetime;
-     String tota_calories_burnt;
+     int total_calories_burnt;
 
 
     public WorkoutTracker()
@@ -117,28 +117,21 @@ public class WorkoutTracker {
 	}
 
 
-	public String getTota_calories_burnt() {
-		return tota_calories_burnt;
+	public int getTotal_calories_burnt() {
+		return total_calories_burnt;
 	}
 
 
-	public void setTota_calories_burnt(String tota_calories_burnt) {
-		this.tota_calories_burnt = tota_calories_burnt;
+	public void setTotal_calories_burnt(int total_calories_burnt) {
+		this.total_calories_burnt = total_calories_burnt;
 	}
 
-public long calculateCalories(String a,String b) throws ParseException {
-	SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-	Date date1 = format.parse(a);
-	Date date2 = format.parse(b);
-	long difference = date2.getTime() - date1.getTime();
-	long result=difference/1000;
-	return result;
-}
+
 	@Override
 	public String toString() {
 		return "WorkoutTracker [id=" + id + ", workout_id=" + workout_id + ", wokout_title=" + wokout_title
 				+ ", user_id=" + user_id + ", user_email=" + user_email + ", start_datetime=" + start_datetime
-				+ ", end_datetime=" + end_datetime + ", tota_calories_burnt=" + tota_calories_burnt + "]";
+				+ ", end_datetime=" + end_datetime + ", tota_calories_burnt=" + total_calories_burnt + "]";
 	}
 
  

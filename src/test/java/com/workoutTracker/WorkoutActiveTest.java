@@ -17,17 +17,19 @@ import com.workoutTracker.repos.UserRepository;
 
 
 public class WorkoutActiveTest {
+	
 	UserRepository rep = new UserRepository();
-	private EntityManager em;
 	WorkoutActiveRepository obj = new WorkoutActiveRepository();
-	int id=3;
-	@Test
+	
+	private EntityManager em;
+	
+	int id=1;
+	
+	//@Test
 	public void assignWorkoutToUser() {
 		
-		
-		
 		User_user user = rep.getUserById(id);
-		WorkoutTracker work = new WorkoutTracker(47,"bicy",id,user.getemail());
+		WorkoutTracker work = new WorkoutTracker(101,"Jogging",id,user.getemail());
 		obj.assignWorkoutToUser(work);
 		
 		
@@ -48,7 +50,7 @@ public class WorkoutActiveTest {
 	
 	
 	//@Test
-	public void Total_Calories(int id) throws ParseException {
+	public void Total_Calories() throws ParseException {
 		obj.Total_Calories(id);
 	}
 	
