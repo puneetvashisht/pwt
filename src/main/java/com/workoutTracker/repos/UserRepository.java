@@ -32,6 +32,22 @@ public class UserRepository {
 		return user;
 		 
 	}
+	
+	public User_user getUserById(int id) {
+		User_user use = em.find(User_user.class,id);
+//		String a = use.getemail();
+	
+		return use;
+	
+}
+/*	public void FindUserById(int id) {
+		TypedQuery<User_user> query = em.createQuery("SELECT u FROM User_user u where u.id=:entityId ", User_user.class);
+		query.setParameter("entityId",id);
+       User_user user = query.getSingleResult();
+		System.out.println(user);
+	
+}*/
+
 	public User_user editUser(User_user user)
 	{   
 		
