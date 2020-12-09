@@ -5,9 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import com.workoutTracker.entities.Category;
 import com.workoutTracker.entities.Workout;
-
-import javax.persistence.TypedQuery;
 
 public class WorkoutRepository {
 	
@@ -23,6 +22,14 @@ public class WorkoutRepository {
 		}
 		public Workout addWorkout(Workout workout)
 		{
+			
+			Category category = workout.getCategory();
+//			em.find(Category.class, primaryKey)
+			TypedQuery<Category> query = em.createQuery("select c from Category c where c.name=:name", Category.class);
+			Category existingCategory = query.getSingleResult();
+			if(existingCategory.getCname().equals(category.getCname())) {
+				workout.setCategory(existingCategory);
+			}
 			
 			em.getTransaction().begin();
 			em.persist(workout);
