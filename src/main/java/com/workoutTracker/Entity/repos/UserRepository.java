@@ -35,6 +35,8 @@ public class UserRepository {
 	
 	public User_user getUserById(int id) {
 		User_user use = em.find(User_user.class,id);
+//		String a = use.getemail();
+	
 		return use;
 	
 }
