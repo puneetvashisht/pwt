@@ -49,13 +49,13 @@ public class WorkoutClient {
 			System.out.println("Enter the id to be deleted");
 			int id2 = inp.nextInt();
 			//inp.next();
-			objRepository.deleteWorkout(id2);
+			objRepository.deleteWorkoutById(id2);
 			break;
 		case 4:
 			System.out.println("Enter the id to be Found");
 			int id3 = inp.nextInt();
 		//	inp.next();
-			objRepository.findByid(id3);
+			objRepository.findById(id3);
 			break;
 		
 		case 5:

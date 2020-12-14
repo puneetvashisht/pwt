@@ -1,76 +1,85 @@
 package com.personalworkouttracker.test;
 
-import static org.junit.Assert.*;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 
 import com.personalworkouttracker.entity.Category;
 import com.personalworkouttracker.entity.Workout;
 import com.personalworkouttracker.repository.WorkoutRepository;
 
+import com.personalworkouttracker.exception.ValidationException;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 public class TestWorkout {
 	private EntityManager em;
-	WorkoutRepository obj = new WorkoutRepository();
-	Category category = new Category("strength");
-	Category c1 = new Category("flexibility");
-	Category c2 = new Category("endurance");
+	WorkoutRepository obj =new WorkoutRepository();
+	Category category=new Category("strength");
+	Category c1=new Category("flexibility");
+	Category c2=new Category("endurance");
+	Category c3=new Category("balance");
 
-	// @Test
-	public void testAddWorkout() {
-		Workout workout = new Workout("Swimming", "this comes under endurance category", 50, c2);
+	
+//@Test
+	public void addWorkout()
+	{
+		Workout wc=new Workout("Swimming","this comes under endurance category",150,c2);
 
-		Workout wc2 = new Workout("Lifting weights", "this comes under strength category", 56, category);
-		Workout wc3 = new Workout("calf stretch", "this comes under flexibility category", 60, c1);
-		Workout wc4 = new Workout("Using resistance band", "this comes under strength category", 150, category);
-		obj.addWorkout(workout);
-		obj.addWorkout(wc2);
+		Workout wc2=new Workout("Stretching","It improves flexibility",90,category);
+		Workout wc3=new Workout("calf stretch","this comes under flexibility category",57,c1);	
+	Workout wc4=new Workout("yoga","this comes under balance category",57,c3);	
+		Workout wc5=new Workout("Dumbbells","this comes under strength category",190,category);
+
+	obj.addWorkout(wc);
+	obj.addWorkout(wc2);
 		obj.addWorkout(wc3);
-		obj.addWorkout(wc4);
+	obj.addWorkout(wc4);
+		obj.addWorkout(wc5);
+	}
+//@Test
+	public void testEditWorkoutByid() {
+	
+		boolean res=obj.updateWorkout(7);
+		assertTrue(res);
+	}
+	
+
+	//@Test
+	public void testFailEditWorkoutByid() {
+	
+		boolean res=obj.updateWorkout(17);
+		assertFalse(res);
 
 	}
 
-	// @Test
-	public void testAddWorkoutFail() throws Exception {
-		Workout wc4 = new Workout("Using resistance band", "this comes under strength category", 150, category);
-		obj.addWorkout(wc4);
+//@Test
+public void testEditWorkoutByCbpm() {
+
+obj.updateWorkoutByCbpm(90);
+}
+//	@Test
+	public void testDeleteWorkoutByTitle() {
+		obj.deleteWorkoutByTitle("calf stretch");
 	}
-
-	// @Test
-	public void testEditWorkout(int id) {
-		
-		obj.updateWorkout(id);
+	//@Test
+	public void testDeleteWorkoutById() {
+		boolean result=obj.deleteWorkoutById(8);
+		assertTrue(true);
 	}
-
-	// @Test
-	public void testEditWorkoutFail(int id) throws Exception {
-		Workout workout = new Workout("Swimming", "this comes under endurance category", 50, c1);
-		obj.updateWorkout(id);
+//	@Test
+	public void testFailDeleteWorkoutById() {
+		obj.deleteWorkoutById(3);
+		assertFalse(false);
 	}
-
-	// @Test
-	public void testDeleteWorkout() {
-		obj.deleteWorkout(5);
-
+	
+	//@Test
+	public void testFindByTitle() {
+		obj.findByTitle("dancing");
 	}
-
-	// @Test
-	public void testDeleteWorkoutFail() throws Exception {
-		obj.deleteWorkout(17);
+	
+	//@Test
+	public void testFindById() {
+		obj.findById(1);
 	}
-
-	// @Test
-	public void testFindWorkoutByTitle() {
-		obj.findByTitle("swimming");
-	}
-
-	// @Test
-	public void testFindWorkoutByTitleFail() throws Exception {
-		obj.findByTitle("running");
-
-	}
+	
 }

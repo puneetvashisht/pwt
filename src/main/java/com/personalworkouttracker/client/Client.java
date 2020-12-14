@@ -9,83 +9,76 @@ import com.personalworkouttracker.repository.UserRepository;
 import com.personalworkouttracker.service.UserService;
 
 public class Client {
-
 	public static void main(String[] args) throws ValidationException {
 
 		UserRepository objRepository = new UserRepository();
-		UserService userServiceOjb = new UserService();
-		Scanner inp = new Scanner(System.in);
+		UserService userService = new UserService();
+		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			System.out.println(
-					"1).Add User \n2).Login User \n3).Edit User \n4).Delete User \n5).Find User \n 6).ViewAllUser \n 7).Exit");
-			int value = inp.nextInt();
-
+			System.out.println("1).Add User \n2).Login User \n3).Edit User \n4).Delete User \n5).Find User \n6).ViewAllUser \n7).Exit");
+			System.out.println("Enter your choice");
+			int value = scanner.nextInt();
 			switch (value) {
 			case 1:
 				System.out.println("Enter your Email:");
-				String email = inp.next();
+				String email = scanner.next();
 				System.out.println("Enter your password:");
-				String password = inp.next();
+				String password = scanner.next();
 				System.out.println("Enter your height:");
-				int height = inp.nextInt();
+				int height = scanner.nextInt();
 				System.out.println("Enter your weight:");
-				int weight = inp.nextInt();
+				int weight = scanner.nextInt();
 				System.out.println("Enter your Role:(Admin/Trainer/User):");
-				String role = inp.next();
-
+				String role = scanner.next();
 				Role roleobj = new Role(role);
 				User userobj = new User(email, password, height, weight, roleobj);
-				userServiceOjb.add(userobj);
+				userService.add(userobj);
 				break;
 
 			case 2:
-				
 				System.out.println("Enter your Email:");
-				String email1 = inp.next();
-
+				String email1 = scanner.next();
 				System.out.println("Enter your Password");
-				String password1 = inp.next();
-
+				String password1 = scanner.next();
 				objRepository.loginTest(email1, password1);
 				break;
-				
+
 			case 3:
-				
 				System.out.println("Enter your id");
-				int id = inp.nextInt();
-				
+				int id = scanner.nextInt();
 				System.out.println("Enter your new Email");
-				String newEmail = inp.next();	
-				
-				userServiceOjb.editUser(id,newEmail);
+				String newEmail = scanner.next();
+				userService.editUser(id, newEmail);
 				break;
-				
+
 			case 4:
 				System.out.println("Enter the user to be deleted");
-				String email2 = inp.next();
-				
+				String email2 = scanner.next();
 				System.out.println("enter the user id");
-				int iddd = inp.nextInt();
-				
+				int iddd = scanner.nextInt();
 				objRepository.deleteUser(iddd, email2);
 				break;
+				
 			case 5:
 				System.out.println("Enter the user to be Found");
-				String email3 = inp.next();
-
+				String email3 = scanner.next();
 				System.out.println(objRepository.findUser(email3));
-				break;
+				break; 
+				
 			case 6:
 				List<User> userList = objRepository.findAllUser();
-				for (User u : userList) {
+				for (User u : userList) 
+				{
 					System.out.println(u);
 				}
+				break;
 
 			case 7:
 				System.exit(0);
+				
 			default:
 				break;
 			}
-		}
+		}		
 	}
 }

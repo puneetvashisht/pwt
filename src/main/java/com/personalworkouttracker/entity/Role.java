@@ -1,5 +1,4 @@
 package com.personalworkouttracker.entity;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +18,6 @@ public class Role {
 
 	public Role(String role_name) {
 		super();
-
 		this.role_name = role_name;
 	}
 
