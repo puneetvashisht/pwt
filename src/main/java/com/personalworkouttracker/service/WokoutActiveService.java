@@ -22,18 +22,27 @@ public class WokoutActiveService {
 		em = emf.createEntityManager();
 	}
 
-	public void calculate_calories(int id) throws ParseException {
+	public boolean calculate_calories(int id) throws ParseException {
 		WorkoutTracker esc = em.find(WorkoutTracker.class, id);
+		
+		if(esc!=null && esc.getStart_datetime()!=null && esc.getEnd_datetime()!=null) {
+		
+					SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+					Date date1 = format.parse(esc.getStart_datetime());
+					Date date2 = format.parse(esc.getEnd_datetime());
+					long difference = date2.getTime() - date1.getTime();
+					long miliseconds = difference / 1000;
 
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-		Date date1 = format.parse(esc.getStart_datetime());
-		Date date2 = format.parse(esc.getEnd_datetime());
-		long difference = date2.getTime() - date1.getTime();
-		long miliseconds = difference / 1000;
-
-		obj.Total_Calories(calculateCalories(miliseconds / 60), id);
-
-	}
+					obj.Total_Calories(calculateCalories(miliseconds / 60), id);
+					System.out.println("Calories calculated Successfully");
+					return true;
+			}
+				
+		else {
+			System.out.println("Invalid id or Start time is null or End time is null");
+			return false; 
+		}
+     }
 
 	public int calculateCalories(long value) {
 		int count = 0;
@@ -46,9 +55,10 @@ public class WokoutActiveService {
 				count = 17;
 			} else if (value > 20) {
 				count = 12;
-			} else if (value > 10) {
+			} else if (value >=3 ) {
 				count = 6;
 			}
+			
 		} else {
 			count = 1;
 

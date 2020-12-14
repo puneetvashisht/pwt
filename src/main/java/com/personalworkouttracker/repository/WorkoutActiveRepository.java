@@ -36,19 +36,28 @@ public class WorkoutActiveRepository {
 
 	}
 
-	public void StartWorkout(int id) {
+	public boolean StartWorkout(int id) {
 		WorkoutTracker esc = em.find(WorkoutTracker.class, id);
-
+        if(esc!=null) {
 		em.getTransaction().begin();
 		LocalTime lt = LocalTime.now();
 		String as = lt.toString();
 		esc.setStart_datetime(as);
-		em.getTransaction().commit();
 
+		em.getTransaction().commit();
+		System.out.println("Workout Started Successfully");
+		return true;
+		}
+        else {
+        	System.out.println("Invalid Id...Id not found in Entity");
+		return false;
+        }
 	}
 
-	public void EndWorkout(int id) {
+	public boolean EndWorkout(int id) {
 		WorkoutTracker esc = em.find(WorkoutTracker.class, id);
+		
+		if(esc!=null  && esc.getStart_datetime()!=null) {
 
 		em.getTransaction().begin();
 		LocalTime lt = LocalTime.now();
@@ -57,6 +66,14 @@ public class WorkoutActiveRepository {
 		esc.setEnd_datetime(as);
 
 		em.getTransaction().commit();
+		System.out.println("Workout Ended Successfully");
+		
+		return true;
+		}
+		else {
+			System.out.println("Id not found in entity or Please start the workout first");
+			return false;
+		}
 
 	}
 
@@ -79,12 +96,16 @@ public class WorkoutActiveRepository {
 		}
 	}
 
+	
 	public void displayByEmail(String email) {
-		TypedQuery<WorkoutTracker> querry = em.createQuery("SELECT w FROM WorkoutTracker w WHERE w.user_email=:name",
+		TypedQuery<WorkoutTracker> query = em.createQuery("SELECT w FROM WorkoutTracker w WHERE w.user_email=:name",
 				WorkoutTracker.class);
-		querry.setParameter("name", email);
-		List<WorkoutTracker> user = querry.getResultList();
-		System.out.println(user);
+		query.setParameter("name", email);
+	
+			List<WorkoutTracker> user = query.getResultList();
+			System.out.println(user);
+		
+		
 
 	}
 

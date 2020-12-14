@@ -1,5 +1,7 @@
 package com.personalworkouttracker.test;
 
+import static org.junit.Assert.*;
+
 import java.text.ParseException;
 import com.personalworkouttracker.entity.User;
 import com.personalworkouttracker.entity.WorkoutTracker;
@@ -15,54 +17,72 @@ public class WorkoutActiveTest {
 	UserRepository rep = new UserRepository();
 	WokoutActiveService serv = new WokoutActiveService();
 	WorkoutActiveRepository obj = new WorkoutActiveRepository();
-	int id = 1;
+	int id = 5;
 
-	// @Test
+	 //@Test
 	public void testAssignWorkoutToUser() {
 
 		User user = rep.getUserById(id);
-		System.out.println(user);
-		WorkoutTracker work = new WorkoutTracker(101, "Jogging", id, user.getEmail());
+		
+		WorkoutTracker work = new WorkoutTracker(102, "weight lifting", id, user.getEmail());
 		obj.assignWorkoutToUser(work);
 
+	}
+
+
+	 //@Test
+	public void testStartWorkout() {
+		boolean found = obj.StartWorkout(3);
+         assertTrue(found);
+	
+	}
+	
+	//@Test
+	public void testStartWorkoutFail() {
+		boolean notFound= obj.StartWorkout(3);
+		assertFalse(notFound);
+	}
+
+	
+     // @Test
+	public void testEndWorkout() {
+		boolean end = obj.EndWorkout(2);
+		assertTrue(end);
+	}
+	
+	//@Test
+	public void testEndWorkoutFail() {
+		boolean notEnd = obj.EndWorkout(5);
+		assertFalse(notEnd);
 	}
 
 	
 
 	// @Test
-	public void testStartWorkout() {
-
-		obj.StartWorkout(id);
-	}
-
-	@Test
-	public void testStartWorkoutFail() {
-		obj.StartWorkout(17);
-	}
-
-	//@Test
-	public void testEndWorkout() {
-		obj.EndWorkout(id);
-	}
-
-	//@Test
-	public void testEndWorkoutFail() throws ValidationException {
-		obj.EndWorkout(88);
-	}
-
-	// @Test
 	public void testCalculateCalories() throws ParseException {
-		serv.calculate_calories(id);
+		boolean success = serv.calculate_calories(2);
+		assertTrue(success);
 	}
+	
+	@Test
+		public void testCalculateCaloriesFail() throws ParseException {
+			boolean unsuccess = serv.calculate_calories(3);
+			assertFalse(unsuccess);
+			
+		}
+
 
 	// @Test
 	public void testDisplayrecord() {
 		obj.displayrecord();
 	}
 
-	// @Test
+	//@Test
 	public void displayParticular() {
-		obj.displayByEmail("murali@123.com");
+	obj.displayByEmail("Ranjith@123.com");
+	  
 	}
+	
+	
 
 }
