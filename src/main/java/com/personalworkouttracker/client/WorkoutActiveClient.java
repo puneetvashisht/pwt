@@ -2,9 +2,10 @@ package com.personalworkouttracker.client;
 
 import java.util.Scanner;
 import java.text.ParseException;
+
+import com.personalworkouttracker.entity.*;
 import com.personalworkouttracker.entity.Role;
 import com.personalworkouttracker.entity.User;
-import com.personalworkouttracker.entity.WorkoutTracker;
 import com.personalworkouttracker.repository.UserRepository;
 import com.personalworkouttracker.repository.WorkoutActiveRepository;
 import com.personalworkouttracker.service.WokoutActiveService;

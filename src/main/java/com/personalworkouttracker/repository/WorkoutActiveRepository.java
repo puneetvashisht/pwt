@@ -1,13 +1,12 @@
 package com.personalworkouttracker.repository;
 
-import com.personalworkouttracker.entity.WorkoutTracker;
-
-
 import javax.persistence.EntityManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+
+import com.personalworkouttracker.entity.*;
 
 import java.text.ParseException;
 import java.time.*;

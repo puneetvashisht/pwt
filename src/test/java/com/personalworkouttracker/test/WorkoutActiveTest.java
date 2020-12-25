@@ -3,8 +3,9 @@ package com.personalworkouttracker.test;
 import static org.junit.Assert.*;
 
 import java.text.ParseException;
+
+import com.personalworkouttracker.entity.*;
 import com.personalworkouttracker.entity.User;
-import com.personalworkouttracker.entity.WorkoutTracker;
 import com.personalworkouttracker.exception.ValidationException;
 import com.personalworkouttracker.repository.UserRepository;
 import com.personalworkouttracker.repository.WorkoutActiveRepository;
@@ -32,41 +33,41 @@ public class WorkoutActiveTest {
 
 	 //@Test
 	public void testStartWorkout() {
-		boolean found = obj.StartWorkout(3);
+		boolean found = obj.StartWorkout(8);
          assertTrue(found);
 	
 	}
 	
 	//@Test
 	public void testStartWorkoutFail() {
-		boolean notFound= obj.StartWorkout(3);
+		boolean notFound= obj.StartWorkout(8);
 		assertFalse(notFound);
 	}
 
 	
-     // @Test
+     //@Test
 	public void testEndWorkout() {
-		boolean end = obj.EndWorkout(2);
+		boolean end = obj.EndWorkout(8);
 		assertTrue(end);
 	}
 	
 	//@Test
 	public void testEndWorkoutFail() {
-		boolean notEnd = obj.EndWorkout(5);
+		boolean notEnd = obj.EndWorkout(8);
 		assertFalse(notEnd);
 	}
 
 	
 
-	// @Test
+	 @Test
 	public void testCalculateCalories() throws ParseException {
-		boolean success = serv.calculate_calories(2);
+		boolean success = serv.calculate_calories(1);
 		assertTrue(success);
 	}
 	
-	@Test
+	//@Test
 		public void testCalculateCaloriesFail() throws ParseException {
-			boolean unsuccess = serv.calculate_calories(3);
+			boolean unsuccess = serv.calculate_calories(8);
 			assertFalse(unsuccess);
 			
 		}

@@ -42,7 +42,7 @@ public class WorkoutClient {
 			
 		//	String st = inp.nextLine();
 		int id1 = inp.nextInt();
-	 objRepository.updateWorkout(id1);
+	
 			break;
 		
 		case 3:
