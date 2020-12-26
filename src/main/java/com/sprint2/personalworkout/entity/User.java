@@ -32,15 +32,6 @@ public class User {
 	public User() {
 		super();
 	}
-	
-	public User(User user) {
-		super();
-		this.email = user.email;
-		this.password = user.password;
-		this.height = user.height;
-		this.weight = user.weight;
-	}
-	
 
 	public User(User user) {
 		super();
@@ -109,10 +100,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", height=" + height + ", weight="
-				+ weight + ", role=" + role + "]";
+		return "User [email=" + email + ", password=" + password + ", height=" + height + ", weight=" + weight	+ "]";
 	}
-
-	
 
 }
