@@ -6,15 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.sprint2.personalworkout.entity.Category;
 import com.sprint2.personalworkout.entity.Workout;
+
 @EnableJpaRepositories
 public interface WorkoutRepository extends JpaRepository<Workout, Integer> {
-	
-	
+
 	public Workout findByTitle(String title);
-	
+
 	@Query("Select w from Workout w where w.title=?1")
 	public Optional<Workout> findByUpdateTitle(String title);
-	
+
 	@Query("select c from Category c where c.cname=?1")
 	public Category findCategory(String cname);
 
@@ -26,7 +26,4 @@ public interface WorkoutRepository extends JpaRepository<Workout, Integer> {
 
 	public Workout save(Optional<Workout> updatedWorkout);
 
-
-	
-	
 }

@@ -72,10 +72,7 @@ public class WorkoutController {
 
 	@GetMapping("/workouts/title")
 	@ApiOperation(value = "Getting the Workout By Title", notes = "Enter your Title", response = Workout.class)
-	public ResponseEntity<Workout> getWorkoutByTitle(
-			@ApiParam(value = "Enter your Email", required = true) @RequestParam("title") String title)
-			throws WorkoutNotFoundException {
-
+	public ResponseEntity<Workout> getWorkoutByTitle(@ApiParam(value = "Enter your Email", required = true) @RequestParam("title") String title)throws WorkoutNotFoundException {
 		Workout existingWorkout = workoutService.findByTitle(title);
 		if (existingWorkout == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -90,7 +87,6 @@ public class WorkoutController {
 			throws WorkoutNotFoundException {
 		workoutService.deleteWorkout(id);
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
-
 	}
 
 	@PutMapping("/workouts")
@@ -101,5 +97,4 @@ public class WorkoutController {
 		 workoutService.updateWorkout(workoutObj);
 		return new ResponseEntity<>("Workout updated", HttpStatus.CREATED);
 	}
-
 }

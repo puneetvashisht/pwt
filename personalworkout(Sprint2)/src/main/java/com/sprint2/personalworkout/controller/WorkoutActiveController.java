@@ -35,7 +35,7 @@ public class WorkoutActiveController {
 	@Autowired
 	WorkoutActiveRepo activeRepository;
 	private static Logger logger = LogManager.getLogger(WorkoutActiveController.class);
-	
+
 	@PostMapping("/activeWorkouts")
 	@ApiOperation(value = "Assigning the workout to user", notes = "Enter your user id and workout id")
 	public ResponseEntity<String> assignWorkout(@RequestParam("userid") int userId,
@@ -51,7 +51,7 @@ public class WorkoutActiveController {
 
 	@PatchMapping("/activeworkouts/startWorkout/{id}")
 	@ApiOperation(value = "Start the workout by id", notes = "Enter the id to start", response = WorkoutActiveTracker.class)
-	public ResponseEntity<String> startWorkoutById(@PathVariable("id") int id)throws UserNotFoundException, WorkoutNotFoundException{
+	public ResponseEntity<String> startWorkoutById(@PathVariable("id") int id)throws UserNotFoundException, WorkoutNotFoundException {
 		logger.info("Recieved id on path: " + id);
 		activeService.startWorkoutById(id);
 		return new ResponseEntity<>("Workout Started Successfully!!", HttpStatus.OK);
@@ -59,7 +59,8 @@ public class WorkoutActiveController {
 
 	@PatchMapping("/ActiveWorkouts/endWorkout/{id}")
 	@ApiOperation(value = "End the workout by id", notes = "Enter the id to end", response = WorkoutActiveTracker.class)
-	public ResponseEntity<String> endWorkoutById(@PathVariable("id") int id) throws ParseException,UserNotFoundException, WorkoutNotFoundException {
+	public ResponseEntity<String> endWorkoutById(@PathVariable("id") int id)
+			throws ParseException, UserNotFoundException, WorkoutNotFoundException {
 		activeService.endWorkoutById(id);
 		return new ResponseEntity<>("Workout Ended Successfully!!", HttpStatus.OK);
 
@@ -75,7 +76,6 @@ public class WorkoutActiveController {
 		} else {
 			return new ResponseEntity<>(found, HttpStatus.OK);
 		}
-
 	}
 
 	@GetMapping("/findByDate")
@@ -124,5 +124,4 @@ public class WorkoutActiveController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 }

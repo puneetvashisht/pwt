@@ -16,8 +16,8 @@ import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
 public class WorkoutServiceImpl implements WorkoutService {
 
 	@Autowired
-	WorkoutRepository workoutRepository;		
-	
+	WorkoutRepository workoutRepository;
+
 	@Override
 	public Workout addWorkout(Workout workout) throws WorkoutAlreadyExistsException {
 
@@ -29,9 +29,9 @@ public class WorkoutServiceImpl implements WorkoutService {
 		Category existingCategory = workoutRepository.findCategory(workout.getCategory().getCname());
 		if (existingCategory.getCname().equals(category.getCname())) {
 			workout.setCategory(existingCategory);
-			workoutRepository.save(workout);			
-		}		
-		return workout; 
+			workoutRepository.save(workout);
+		}
+		return workout;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 		Optional<Workout> existingWorkout = workoutRepository.findById(id);
 		if (existingWorkout.isPresent()) {
 			return existingWorkout;
-			
+
 		} else {
 			throw new WorkoutNotFoundException("Workout Not Found");
 		}
@@ -74,13 +74,13 @@ public class WorkoutServiceImpl implements WorkoutService {
 	@Transactional
 	public Workout updateWorkout(Workout workout) throws WorkoutNotFoundException {
 		Workout udpatedWorkout = workoutRepository.findWorkout(workout.getId());
-		
+
 		if (workout.getTitle() != null) {
 			udpatedWorkout.setTitle(workout.getTitle());
 		}
 		if (workout.getNote() != null) {
 			udpatedWorkout.setNote(workout.getNote());
-		}		
+		}
 		return udpatedWorkout;
 	}
 

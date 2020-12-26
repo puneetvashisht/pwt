@@ -27,30 +27,37 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	WorkoutService workoutService;
 
 	@Override
-	public WorkoutActiveTracker assigningWorkout(int userId, int workoutId)	throws UserNotFoundException, UserAlreadyExistsException, WorkoutNotFoundException {
+	public WorkoutActiveTracker assigningWorkout(int userId, int workoutId)throws UserNotFoundException, UserAlreadyExistsException, WorkoutNotFoundException {
 		Optional<User> user = userService.findUserById(userId);
 		Optional<Workout> work = workoutService.findWorkoutById(workoutId);
 		Workout workoutObj;
 		String workoutTitle;
-		WorkoutActiveTracker workoutt ;
+		WorkoutActiveTracker workoutt;
 		if (user.isPresent()) {
-			User objUser=user.get();
+			User objUser = user.get();
 			String email = objUser.getEmail();
 			WorkoutActiveTracker track = activeRepository.findByEmail(email);
-			if (track == null) {				
-				Workout workoutObj1=work.get();
-				workoutTitle = workoutObj1.getTitle();
-				 workoutt = new WorkoutActiveTracker(workoutId, workoutTitle, userId, email);
-				activeRepository.save(workoutt);
-				return workoutt;
+			if (track == null) {
+				if (work.isPresent()) {
+					Workout workoutObj1 = work.get();
+					workoutTitle = workoutObj1.getTitle();
+					workoutt = new WorkoutActiveTracker(workoutId, workoutTitle, userId, email);
+					activeRepository.save(workoutt);
+					return workoutt;
+				} else {
+					throw new WorkoutNotFoundException("Workout not exists...Enter valid Workout!!");
+				}
 			} else if ((track.getStartTime() != null && track.getEndTime() != null)) {
-				if(work.isPresent()) {
-				 workoutObj=work.get();
-				workoutTitle = workoutObj.getTitle();
-				 workoutt = new WorkoutActiveTracker(workoutId, workoutTitle, userId, email);
-				activeRepository.save(workoutt);
-				return workoutt;}
-				return null;
+				if (work.isPresent()) {
+					workoutObj = work.get();
+					workoutTitle = workoutObj.getTitle();
+					workoutt = new WorkoutActiveTracker(workoutId, workoutTitle, userId, email);
+					activeRepository.save(workoutt);
+					return workoutt;
+				} else {
+					throw new WorkoutNotFoundException("Workout not exists...Enter valid Workout!!");
+				}
+
 			} else {
 				throw new UserAlreadyExistsException("Workout Already assigned");
 			}
