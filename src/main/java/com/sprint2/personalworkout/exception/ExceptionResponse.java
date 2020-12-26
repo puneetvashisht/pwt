@@ -2,6 +2,7 @@ package com.sprint2.personalworkout.exception;
 
 import java.util.Date;
 
+
 public class ExceptionResponse {
 
 	private Date timeStamp;	

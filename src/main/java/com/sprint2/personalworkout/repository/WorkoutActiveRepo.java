@@ -1,28 +1,27 @@
 package com.sprint2.personalworkout.repository;
-
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.sprint2.personalworkout.entity.User;
 import com.sprint2.personalworkout.entity.Workout;
-import com.sprint2.personalworkout.entity.WorkoutTracker;
+import com.sprint2.personalworkout.entity.WorkoutActiveTracker;
 
 
 
 @Repository
-public interface WorkoutActiveRepo extends JpaRepository<WorkoutTracker, Integer> {
+public interface WorkoutActiveRepo extends JpaRepository<WorkoutActiveTracker, Integer> {
 
-	@Query("select w from WorkoutTracker w where w.user_email=?1")
-	public WorkoutTracker findByEmail(String email);
+	@Query("select w from WorkoutActiveTracker w where w.user_email=?1")
+	public WorkoutActiveTracker findByEmail(String email);
 
+	@Query("select w from Workout w where w.title=?1")
+	public Workout getCbpm(String name);	
 	
-	
-	@Query("select u from User u where u.id=?1")
-	public User findByUserId(int id);
-	
-	@Query("select w from Workout w where w.id=?1")
-	public Workout findWorkoutById(int id);
+	@Query("select w from WorkoutActiveTracker w where w.start_date=?1")
+	public List<WorkoutActiveTracker> findByDate(String date);
+
+
+
 	
 	
 	

@@ -6,14 +6,17 @@ import com.sprint2.personalworkout.entity.User;
 import com.sprint2.personalworkout.repository.UserRepository;
 import com.sprint2.personalworkout.services.WorkoutService;
 import com.sprint2.personalworkout.repository.WorkoutRepository;
-import com.google.common.base.Optional;
+import java.util.Optional;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
 import com.sprint2.personalworkout.exception.UserNotFoundException;
+import com.sprint2.personalworkout.exception.WorkoutAlreadyExistsException;
 import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
 
 @Service
@@ -31,11 +34,11 @@ public class WorkoutServiceImpl implements WorkoutService {
 	}
 
 	@Override
-	public Workout addWorkout(Workout workout) throws WorkoutNotFoundException {
+	public Workout addWorkout(Workout workout) throws WorkoutAlreadyExistsException {
 
 		Workout existingWorkout = workoutRepository.findByTitle(workout.getTitle());
 		if (existingWorkout != null) {
-			throw new WorkoutNotFoundException("Workout Already Exists");
+			throw new WorkoutAlreadyExistsException("Workout Already Exists");
 		}
 		Category category = workout.getCategory();
 		Category existingCategory = workoutRepository.findCategory(workout.getCategory().getCname());
@@ -48,8 +51,8 @@ public class WorkoutServiceImpl implements WorkoutService {
 	}
 
 	@Override
-	public Workout findWorkoutById(int id) throws WorkoutNotFoundException {
-		Workout existingWorkout = workoutRepository.findWorkout(id);
+	public Optional<Workout> findWorkoutById(int id) throws WorkoutNotFoundException {
+		Optional<Workout> existingWorkout = workoutRepository.findById(id);
 		if (existingWorkout != null) {
 			return existingWorkout;
 		} else {
@@ -83,21 +86,17 @@ public class WorkoutServiceImpl implements WorkoutService {
 	}
 
 	@Override
+	@Transactional
 	public Workout updateWorkout(Workout workout) throws WorkoutNotFoundException {
-		Workout updatedWorkout = workoutRepository.findWorkout(workout.getId());
-		if (updatedWorkout != null) {
-
-			Category category = workout.getCategory();
-			Category existingCategory = workoutRepository.findCategory(workout.getCategory().getCname());
-			if (existingCategory.getCname().equals(category.getCname())) {
-				workout.setCategory(existingCategory);
-			}
-			return workoutRepository.save(workout);
-
-		} else {
-			throw new WorkoutNotFoundException("Workout does not exists");
+		Workout udpatedWorkout = workoutRepository.findWorkout(workout.getId());
+		
+		if (workout.getTitle() != null) {
+			udpatedWorkout.setTitle(workout.getTitle());
 		}
-
+		if (workout.getNote() != null) {
+			udpatedWorkout.setNote(workout.getNote());
+		}		
+		return udpatedWorkout;
 	}
 
 }

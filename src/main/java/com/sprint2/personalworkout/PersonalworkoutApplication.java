@@ -38,7 +38,7 @@ public class PersonalworkoutApplication {
 	private ApiInfo apiInfo()
 	{
 		return new ApiInfoBuilder().title("PERSONAL WORKOUT TRACKER API")
-				.description("This API is used to CRUD operations of User")
+				.description("This API is used for Workout Tracker App")
 				.build();
 	}
 	

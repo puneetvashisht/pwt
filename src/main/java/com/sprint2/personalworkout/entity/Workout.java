@@ -23,6 +23,12 @@ public class Workout {
 
 	public Workout() {
 	}
+	
+	public Workout(Workout workout) {
+		super();
+		this.title = workout.title;
+		this.note = workout.note;		
+	}
 
 	public Workout(String title, String note, int cbpm, Category category) {
 		super();

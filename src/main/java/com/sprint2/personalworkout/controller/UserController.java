@@ -1,6 +1,7 @@
 package com.sprint2.personalworkout.controller;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,26 +38,26 @@ public class UserController {
 	
 	
 	@GetMapping
-	public String home()
-	{
+	public String home(){
 		return "welocme "+new Date();
 	}
 	
-	@PostMapping("/useradd")
+	@PostMapping("/users")
 	@ApiOperation(value = "Adding the User", notes = "Enter all values to add the user", response = User.class)
-	public ResponseEntity<String> addUser(@RequestBody User user) throws ValidationException, UserAlreadyExistsException {		
+	public ResponseEntity<String> addUser(@RequestBody User user) throws ValidationException, UserAlreadyExistsException, UserNotFoundException {		
 		User users = userService.addUser(user);
 		if (users != null) {
 			return new ResponseEntity<>("successfully registered user!!", HttpStatus.CREATED);
 		} else {
+			
 			return new ResponseEntity<String>("User Not Added", HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@GetMapping("/login") 
+	@PostMapping("/users/login") 
 	@ApiOperation(value = "User Login", notes = "Enter your credentials", response = User.class)
-	public ResponseEntity<String> login(@ApiParam(value = "Enter your Email Id", required = true)@RequestParam("email") String email,@ApiParam(value = "Enter your Password", required = true)@RequestParam("password") String password) {
-		User user = userService.login(email, password);
+	public ResponseEntity<String> login(@ApiParam(value = "Enter your Details", required = true)@RequestBody User userObj) {
+		User user = userService.login(userObj);
 		if (user!=null) {		    
 		     return new ResponseEntity<String>("Successfully Logged in", HttpStatus.OK);
 		}
@@ -65,32 +66,31 @@ public class UserController {
 		} 			
 	} 
 	
-	@GetMapping("/user/{id}")
+	@GetMapping("/users/{id}")
 	@ApiOperation(value = "Getting the User By Id", notes = "Enter your UserId", response = User.class)
-	public ResponseEntity<User> getUserById(@ApiParam(value = "Enter your Id", required = true)@PathVariable("id") int id) throws UserNotFoundException {
-		ResponseEntity<User> response ;
+	public ResponseEntity<Optional<User>> getUserById(@ApiParam(value = "Enter your Id", required = true)@PathVariable("id") int id) throws UserNotFoundException {
+		ResponseEntity<Optional<User>> response ;
 		System.out.println("Recieved id on path: " + id);
-		User user = userService.findUserById(id);
+		Optional<User> user = userService.findUserById(id);
 		if (user!=null) {			
-			response = new ResponseEntity<>(user, HttpStatus.OK);
+			response = new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<Optional<User>>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
 
-	@GetMapping("/useremail")
+	@GetMapping("/users/email")
 	@ApiOperation(value = "Getting the User By Email", notes = "Enter your Email", response = User.class)
 	public ResponseEntity<User> getUserByEmail(@ApiParam(value = "Enter your Email", required = true)@RequestParam("email") String email) throws UserNotFoundException {
 		User existingUser = userService.findByEmail(email);
-		if (existingUser == null) {
-			
+		if (existingUser == null) {			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<User>(existingUser, HttpStatus.OK);
 	}
 
-	@GetMapping("/alluser")
+	@GetMapping("/users")
 	@ApiOperation(value = "View all User", notes = "", response = User.class)
 	public ResponseEntity<List<User>> getAllUsers() {		
 	List<User> users = userService.findAll();
@@ -102,24 +102,18 @@ public class UserController {
 	}
 }	
 
-	@DeleteMapping("/userdelete/{id}")
+	@DeleteMapping("/users/{id}")
 	@ApiOperation(value = "Deleting a User By Id", notes = "Enter your UserId", response = User.class)
-	public ResponseEntity<String> deleteUser(@ApiParam(value = "Enter your userId", required = true)@PathVariable("id") int id) throws UserNotFoundException {
-	
+	public ResponseEntity<String> deleteUser(@ApiParam(value = "Enter your userId", required = true)@PathVariable("id") int id) throws UserNotFoundException {	
 		userService.deleteUser(id);
         return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);  
 	}
 
-	@PutMapping("/userupdate")
+	@PutMapping("/users")
 	@ApiOperation(value = "Editing a User", notes = "Enter your all values including edited values", response = User.class)
 	public ResponseEntity<User> updateUser(@ApiParam(value = "Enter your Details", required = true)@RequestBody User userObj) throws UserNotFoundException {		
 		User user=userService.updateUser(userObj);
-		return new ResponseEntity<User>(user, HttpStatus.CREATED); 
-//		if (user!=null) {			
-//			return new ResponseEntity<String>("User updated", HttpStatus.CREATED);
-//		} else
-//			return new ResponseEntity<>("User Not Found", HttpStatus.NOT_FOUND);
-//	}
+		return new ResponseEntity<User>(user, HttpStatus.CREATED); 	
 	}
 
 }

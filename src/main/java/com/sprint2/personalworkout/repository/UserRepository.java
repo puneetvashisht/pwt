@@ -24,10 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public User findByEmailAndPassword(String email, String password);	
 	
 	@Query("select r from Role r where r.role_name=?1")
-	public Role findRole(String role_name);
-	
-	@Query("select u from User u where u.id=?1")
-	public User findUser(int id);
+	public Role findRole(String role_name);	
 
 	@Query("select u from User u where u.id=?1")
 	public Optional<User> findUsers(int id);

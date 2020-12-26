@@ -3,14 +3,11 @@ package com.sprint2.personalworkout.services.implementation;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import com.sprint2.personalworkout.repository.*;
 import com.sprint2.personalworkout.services.UserService;
-
-import ch.qos.logback.classic.html.DefaultThrowableRenderer;
-
 import com.sprint2.personalworkout.entity.Role;
 import com.sprint2.personalworkout.entity.User;
 import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
@@ -60,13 +57,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(String email, String password) {
+	@Transactional
+	public User login(@RequestBody User user) {
+		String email = user.getEmail();
+		String password = user.getPassword();
 		return userRepository.findByEmailAndPassword(email, password);
 	}
 
 	@Override
-	public User findUserById(int id) throws UserNotFoundException {
-		User existingUser = userRepository.findUser(id);
+	public Optional<User> findUserById(int id) throws UserNotFoundException {
+		Optional<User> existingUser = userRepository.findById(id);
 		if (existingUser != null) {
 			return existingUser;
 		} else {
@@ -100,19 +100,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User user) throws UserNotFoundException {
-		User updatedUser = userRepository.findUser(user.getId());
-		if (updatedUser != null) {
-			Role role = user.getRole();
-			Role existingRole = userRepository.findRole(user.getRole().getRole_name());
-			if (existingRole.getRole_name().equals(role.getRole_name())) {
-				user.setrole(existingRole);				
-			}return userRepository.save(user);
-			
-		} else {
-			throw new UserNotFoundException("User does not exists");
+	@Transactional
+	public User updateUser(@RequestBody User user) throws UserNotFoundException {
+		User updatedUser = userRepository.findByEmail(user.getEmail());
+		if (user.getWeight() != 0) {
+			updatedUser.setWeight(user.getWeight());
 		}
-
+		if (user.getHeight() != 0) {
+			updatedUser.setHeight(user.getHeight());
+		}
+		if (user.getPassword() != null) {
+			updatedUser.setPassword(user.getPassword());
+		}
+		return updatedUser;
 	}
 
 }

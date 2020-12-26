@@ -2,6 +2,8 @@ package com.sprint2.personalworkout.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.sprint2.personalworkout.repository.WorkoutRepository;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import com.sprint2.personalworkout.services.WorkoutService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
+import com.sprint2.personalworkout.exception.WorkoutAlreadyExistsException;
 import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
 
 @RestController
@@ -29,9 +33,9 @@ public class WorkoutController {
 	@Autowired
 	WorkoutService workoutService;
 
-	@PostMapping("/add")
+	@PostMapping("/workouts")
 	@ApiOperation(value = "Adding the Workout", notes = "Enter all values to add the workout", response = Workout.class)
-	public ResponseEntity<String> addWorkout(@RequestBody Workout workout) throws WorkoutNotFoundException {
+	public ResponseEntity<String> addWorkout(@RequestBody Workout workout) throws WorkoutAlreadyExistsException {
 		Workout workouts = workoutService.addWorkout(workout);
 		if (workouts != null) {
 			return new ResponseEntity<>("successfully registered workout!!", HttpStatus.CREATED);
@@ -49,28 +53,27 @@ public class WorkoutController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
 	@GetMapping("/workouts/{id}")
 	@ApiOperation(value = "Getting the Workout By Id", notes = "Enter your WorkoutId", response = Workout.class)
-	public ResponseEntity<Workout> getWorkoutById(
+	public ResponseEntity<Optional<Workout>> getWorkoutById(
 			@ApiParam(value = "Enter your Id", required = true) @PathVariable("id") int id)
 			throws WorkoutNotFoundException {
-		ResponseEntity<Workout> re;
+		ResponseEntity<Optional<Workout>> re;
 		System.out.println("Recieved id on path: " + id);
 
-		Workout workout = workoutService.findWorkoutById(id);
+		Optional<Workout> workout = workoutService.findWorkoutById(id);
 		if (workout != null) {
 
-			re = new ResponseEntity<>(workout, HttpStatus.OK);
+			re = new ResponseEntity<Optional<Workout>>(workout, HttpStatus.OK);
 		} else {
-			re = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			re = new ResponseEntity<Optional<Workout>>(HttpStatus.NOT_FOUND);
 		}
 		return re;
 	}
 
-	@GetMapping("/title")
+	@GetMapping("/workouts/title")
 	@ApiOperation(value = "Getting the Workout By Title", notes = "Enter your Title", response = Workout.class)
 	public ResponseEntity<Workout> getWorkoutByTitle(
 			@ApiParam(value = "Enter your Email", required = true) @RequestParam("title") String title)
@@ -83,7 +86,7 @@ public class WorkoutController {
 		return new ResponseEntity<Workout>(existingWorkout, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/workouts/{id}")
 	@ApiOperation(value = "Deleting a Workout By Id", notes = "Enter your WorkoutId", response = Workout.class)
 	public ResponseEntity<String> deleteWorkout(
 			@ApiParam(value = "Enter your userId", required = true) @PathVariable("id") int id)
@@ -93,7 +96,7 @@ public class WorkoutController {
 
 	}
 
-	@PutMapping("/workoutupdate")
+	@PutMapping("/workouts")
 	@ApiOperation(value = "Editing a Workout", notes = "Enter your all values including edited values", response = Workout.class)
 	public ResponseEntity<String> updateWorkout(
 			@ApiParam(value = "Enter your Details", required = true) @RequestBody Workout workoutObj)

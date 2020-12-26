@@ -8,29 +8,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "WorkoutActive")
-public class WorkoutTracker {
+public class WorkoutActiveTracker {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 	int workout_id;
 	String wokout_title;
-	int user_id;
+	int users_id;
 	String user_email;
-	String start_datetime;
-	String end_datetime;
+	String start_date;
+	String start_time;
+	String end_time;
 	int total_calories_burnt;
 
-	public WorkoutTracker() {
+	public WorkoutActiveTracker() {
 
 	}
 
-	public WorkoutTracker(int workout_id, String wokout_title, int user_id, String user_email) {
+	public WorkoutActiveTracker(int workout_id, String wokout_title, int user_id, String user_email) {
 		super();
 
 		this.workout_id = workout_id;
 		this.wokout_title = wokout_title;
-		this.user_id = user_id;
+		this.users_id = user_id;
 		this.user_email = user_email;
 	}
 
@@ -58,12 +59,12 @@ public class WorkoutTracker {
 		this.wokout_title = wokout_title;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUsers_id() {
+		return users_id;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUsers_id(int users_id) {
+		this.users_id = users_id;
 	}
 
 	public String getUser_email() {
@@ -74,20 +75,28 @@ public class WorkoutTracker {
 		this.user_email = user_email;
 	}
 
-	public String getStart_datetime() {
-		return start_datetime;
+	public String getStart_date() {
+		return start_date;
 	}
 
-	public void setStart_datetime(String start_datetime) {
-		this.start_datetime = start_datetime;
+	public void setStart_date(String start_date) {
+		this.start_date = start_date;
 	}
 
-	public String getEnd_datetime() {
-		return end_datetime;
+	public String getStart_time() {
+		return start_time;
 	}
 
-	public void setEnd_datetime(String end_datetime) {
-		this.end_datetime = end_datetime;
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
 	}
 
 	public int getTotal_calories_burnt() {
@@ -98,11 +107,7 @@ public class WorkoutTracker {
 		this.total_calories_burnt = total_calories_burnt;
 	}
 
-	@Override
-	public String toString() {
-		return "WorkoutTracker [id=" + id + ", workout_id=" + workout_id + ", wokout_title=" + wokout_title
-				+ ", user_id=" + user_id + ", user_email=" + user_email + ", start_datetime=" + start_datetime
-				+ ", end_datetime=" + end_datetime + ", tota_calories_burnt=" + total_calories_burnt + "]";
-	}
 
+
+	
 }

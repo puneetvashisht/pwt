@@ -1,5 +1,7 @@
 package com.sprint2.personalworkout.services;
 import java.util.List;
+import java.util.Optional;
+
 import com.sprint2.personalworkout.entity.User;
 import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
 import com.sprint2.personalworkout.exception.UserNotFoundException;
@@ -9,9 +11,9 @@ public interface UserService {
 
 	public User addUser(User user) throws UserAlreadyExistsException, ValidationException;
 
-	public User login(String email, String password);
+	public User login(User user);
 	
-	public User findUserById(int id) throws UserNotFoundException;
+	public Optional<User> findUserById(int id) throws UserNotFoundException;
 	
 	public User findByEmail(String email)throws UserNotFoundException;
 	

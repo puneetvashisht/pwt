@@ -33,6 +33,14 @@ public class User {
 		super();
 	}
 
+	public User(User user) {
+		super();
+		this.email = user.email;
+		this.password = user.password;
+		this.height = user.height;
+		this.weight = user.weight;
+	}
+	
 	public User(String email, String password, int height, int weight, Role role) {
 		super();
 		this.email = email;
