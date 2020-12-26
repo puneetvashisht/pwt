@@ -12,6 +12,7 @@ import com.sprint2.personalworkout.entity.*;
 import com.sprint2.personalworkout.exception.*;
 
 import com.sprint2.personalworkout.repository.WorkoutActiveRepo;
+import com.sprint2.personalworkout.services.UserService;
 import com.sprint2.personalworkout.services.WorkoutActiveService;
 
 @Service
@@ -19,11 +20,18 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 
 	@Autowired
 	WorkoutActiveRepo activeRepository;
+	
+	@Autowired
+	UserService userService;
 
 	@Override
 	public WorkoutTracker assigningWorkout(int User_id, int workout_id)
 			throws UserNotFoundException, UserAlreadyExistsException {
-		User user = activeRepository.findByUserId(User_id);
+		
+//		User user = activeRepository.findByUserId(User_id);
+		
+		User user = userService.findUserById(User_id);
+		
 		Workout work = activeRepository.findWorkoutById(workout_id);
 
 		if (user != null) {

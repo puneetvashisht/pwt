@@ -18,8 +18,8 @@ public interface WorkoutActiveRepo extends JpaRepository<WorkoutTracker, Integer
 
 	
 	
-	@Query("select u from User u where u.id=?1")
-	public User findByUserId(int id);
+//	@Query("select u from User u where u.id=?1")
+//	public User findByUserId(int id);
 	
 	@Query("select w from Workout w where w.id=?1")
 	public Workout findWorkoutById(int id);

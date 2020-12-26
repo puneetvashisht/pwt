@@ -2,20 +2,20 @@ package com.sprint2.personalworkout.services.implementation;
 
 import java.util.List;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sprint2.personalworkout.repository.*;
-import com.sprint2.personalworkout.services.UserService;
-
-import ch.qos.logback.classic.html.DefaultThrowableRenderer;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.sprint2.personalworkout.entity.Role;
 import com.sprint2.personalworkout.entity.User;
 import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
 import com.sprint2.personalworkout.exception.UserNotFoundException;
 import com.sprint2.personalworkout.exception.ValidationException;
+import com.sprint2.personalworkout.repository.UserRepository;
+import com.sprint2.personalworkout.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -100,18 +100,38 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User user) throws UserNotFoundException {
+	@Transactional
+	public User updateUser(@RequestBody User user) throws UserNotFoundException {
+		System.out.println(user);
 		User updatedUser = userRepository.findUser(user.getId());
-		if (updatedUser != null) {
-			Role role = user.getRole();
-			Role existingRole = userRepository.findRole(user.getRole().getRole_name());
-			if (existingRole.getRole_name().equals(role.getRole_name())) {
-				user.setrole(existingRole);				
-			}return userRepository.save(user);
-			
-		} else {
-			throw new UserNotFoundException("User does not exists");
+		
+	
+		
+		System.out.println(updatedUser);
+		
+		if(user.getWeight() !=0) {
+			updatedUser.setWeight(user.getWeight());
 		}
+		if(user.getHeight() !=0) {
+			updatedUser.setHeight(user.getHeight());
+		}
+		if(user.getEmail() != null) {
+			updatedUser.setEmail(user.getEmail());
+		}
+		
+		return updatedUser;
+		
+		
+//		if (updatedUser != null) {
+//			Role role = user.getRole();
+//			Role existingRole = userRepository.findRole(user.getRole().getRole_name());
+//			if (existingRole.getRole_name().equals(role.getRole_name())) {
+//				user.setrole(existingRole);				
+//			}return userRepository.save(user);
+//			
+//		} else {
+//			throw new UserNotFoundException("User does not exists");
+//		}
 
 	}
 
