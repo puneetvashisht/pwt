@@ -33,6 +33,13 @@ public class WorkoutController {
 	@Autowired
 	WorkoutService workoutService;
 
+	/**
+	 * This method is used to add the workouts
+	 * @param workout
+	 * @return
+	 * @throws WorkoutAlreadyExistsException
+	 */
+	
 	@PostMapping("/workouts")
 	@ApiOperation(value = "Adding the Workout", notes = "Enter all values to add the workout", response = Workout.class)
 	public ResponseEntity<String> addWorkout(@RequestBody Workout workout) throws WorkoutAlreadyExistsException {
@@ -44,6 +51,11 @@ public class WorkoutController {
 		}
 	}
 
+	/**
+	 * This method is used to get all the workouts
+	 * @return
+	 */
+	
 	@GetMapping("/workouts")
 	@ApiOperation(value = "View all workouts", notes = "", response = Workout.class)
 	public ResponseEntity<List<Workout>> getAllWorkouts() {
@@ -55,6 +67,13 @@ public class WorkoutController {
 		}
 	}
 
+	/**
+	 * This method is used to get the workout by Id
+	 * @param id
+	 * @return
+	 * @throws WorkoutNotFoundException
+	 */
+	
 	@GetMapping("/workouts/{id}")
 	@ApiOperation(value = "Getting the Workout By Id", notes = "Enter your WorkoutId", response = Workout.class)
 	public ResponseEntity<Optional<Workout>> getWorkoutById(
@@ -70,6 +89,13 @@ public class WorkoutController {
 		return re;
 	}
 
+	/**
+	 * This method is used to get workout By Title
+	 * @param title
+	 * @return
+	 * @throws WorkoutNotFoundException
+	 */
+	
 	@GetMapping("/workouts/title")
 	@ApiOperation(value = "Getting the Workout By Title", notes = "Enter your Title", response = Workout.class)
 	public ResponseEntity<Workout> getWorkoutByTitle(@ApiParam(value = "Enter your Email", required = true) @RequestParam("title") String title)throws WorkoutNotFoundException {
@@ -80,6 +106,13 @@ public class WorkoutController {
 		return new ResponseEntity<>(existingWorkout, HttpStatus.OK);
 	}
 
+	/**
+	 * This method is used to delete workout By Id
+	 * @param id
+	 * @return
+	 * @throws WorkoutNotFoundException
+	 */
+	
 	@DeleteMapping("/workouts/{id}")
 	@ApiOperation(value = "Deleting a Workout By Id", notes = "Enter your WorkoutId", response = Workout.class)
 	public ResponseEntity<String> deleteWorkout(
@@ -89,6 +122,13 @@ public class WorkoutController {
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
 	}
 
+	/**
+	 * This method is used to update workouts
+	 * @param workoutObj
+	 * @return
+	 * @throws WorkoutNotFoundException
+	 */
+	
 	@PutMapping("/workouts")
 	@ApiOperation(value = "Editing a Workout", notes = "Enter your all values including edited values", response = Workout.class)
 	public ResponseEntity<String> updateWorkout(

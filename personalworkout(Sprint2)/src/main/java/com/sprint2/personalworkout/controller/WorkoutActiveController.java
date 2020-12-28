@@ -36,6 +36,16 @@ public class WorkoutActiveController {
 	WorkoutActiveRepo activeRepository;
 	private static Logger logger = LogManager.getLogger(WorkoutActiveController.class);
 
+	/**
+	 * This method is used to assign the workout to the user
+	 * @param userId
+	 * @param workoutId
+	 * @return
+	 * @throws UserNotFoundException
+	 * @throws UserAlreadyExistsException
+	 * @throws WorkoutNotFoundException
+	 */
+	
 	@PostMapping("/activeWorkouts")
 	@ApiOperation(value = "Assigning the workout to user", notes = "Enter your user id and workout id")
 	public ResponseEntity<String> assignWorkout(@RequestParam("userid") int userId,
@@ -49,7 +59,15 @@ public class WorkoutActiveController {
 		return re;
 	}
 
-	@PatchMapping("/activeworkouts/startWorkout/{id}")
+	/**
+	 * This method is used to start workout for a user
+	 * @param id
+	 * @return
+	 * @throws UserNotFoundException
+	 * @throws WorkoutNotFoundException
+	 */
+	
+	@PatchMapping("/activeworkouts/startworkout/{id}")
 	@ApiOperation(value = "Start the workout by id", notes = "Enter the id to start", response = WorkoutActiveTracker.class)
 	public ResponseEntity<String> startWorkoutById(@PathVariable("id") int id)throws UserNotFoundException, WorkoutNotFoundException {
 		logger.info("Recieved id on path: " + id);
@@ -57,7 +75,16 @@ public class WorkoutActiveController {
 		return new ResponseEntity<>("Workout Started Successfully!!", HttpStatus.OK);
 	}
 
-	@PatchMapping("/ActiveWorkouts/endWorkout/{id}")
+	/**
+	 * This method is used to end workout for a user
+	 * @param id
+	 * @return
+	 * @throws ParseException
+	 * @throws UserNotFoundException
+	 * @throws WorkoutNotFoundException
+	 */
+	
+	@PatchMapping("/activeworkouts/endworkout/{id}")
 	@ApiOperation(value = "End the workout by id", notes = "Enter the id to end", response = WorkoutActiveTracker.class)
 	public ResponseEntity<String> endWorkoutById(@PathVariable("id") int id)
 			throws ParseException, UserNotFoundException, WorkoutNotFoundException {
@@ -66,7 +93,14 @@ public class WorkoutActiveController {
 
 	}
 
-	@GetMapping("/ActiveWorkouts/findByEmail")
+	/**
+	 * This method is used to get the 
+	 * @param email
+	 * @return
+	 * @throws UserNotFoundException
+	 */
+	
+	@GetMapping("/activeworkouts/findbyemail")
 	@ApiOperation(value = "Get details by Email", notes = "Enter the Email id", response = WorkoutActiveTracker.class)
 	public ResponseEntity<WorkoutActiveTracker> getByEmail(@RequestParam("email") String email)
 			throws UserNotFoundException {
@@ -78,7 +112,14 @@ public class WorkoutActiveController {
 		}
 	}
 
-	@GetMapping("/findByDate")
+	/**
+	 * This method is used to get active workout details of a user by date
+	 * @param date
+	 * @return
+	 * @throws WorkoutNotFoundException
+	 */
+	
+	@GetMapping("/findbydate")
 	@ApiOperation(value = "Get all details by date", notes = "", response = WorkoutActiveTracker.class)
 	public ResponseEntity<List<WorkoutActiveTracker>> getWorkoutActiveDetailsbyDate(@RequestParam("date") String date)
 			throws WorkoutNotFoundException {
@@ -91,7 +132,14 @@ public class WorkoutActiveController {
 		}
 	}
 
-	@GetMapping("/ActiveWorkouts/findById/{id}")
+	/**
+	 * This method is used to get active workout details of user by Id
+	 * @param id
+	 * @return
+	 * @throws UserNotFoundException
+	 */
+	
+	@GetMapping("/activeworkouts/findbyid/{id}")
 	@ApiOperation(value = "Get details by id", notes = "Enter the WorkoutActive id", response = WorkoutActiveTracker.class)
 	public ResponseEntity<WorkoutActiveTracker> getWorkoutActiveDetailsById(@PathVariable("id") int id)
 			throws UserNotFoundException {
@@ -105,7 +153,14 @@ public class WorkoutActiveController {
 		return response;
 	}
 
-	@DeleteMapping("/ActiveWorkouts/{id}")
+	/**
+	 * This method is used to delete workokut details of a user by Id
+	 * @param id
+	 * @return
+	 * @throws UserNotFoundException
+	 */
+	
+	@DeleteMapping("/activeworkouts/{id}")
 	@ApiOperation(value = "Delete by Id", notes = "Enter your WorkoutActive table Id", response = WorkoutActiveTracker.class)
 	public ResponseEntity<String> deleteWorkoutActiveDetailsById(@PathVariable("id") int id)
 			throws UserNotFoundException {
@@ -113,7 +168,12 @@ public class WorkoutActiveController {
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
 	}
 
-	@GetMapping("/ActiveWorkouts/viewAll")
+	/**
+	 * This method is used to get workout Details of all user
+	 * @return
+	 */
+	
+	@GetMapping("/activeworkouts/viewall")
 	@ApiOperation(value = "Get all details in workout", notes = "", response = WorkoutActiveTracker.class)
 	public ResponseEntity<List<WorkoutActiveTracker>> getWorkoutActiveDetailsOfAllUser() {
 

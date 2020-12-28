@@ -12,7 +12,7 @@ public interface UserService {
 
 	public User addUser(User user) throws UserAlreadyExistsException, ValidationException;
 
-	public User login(User user);
+	public User login(User user) throws ValidationException;
 
 	public Optional<User> findUserById(int id) throws UserNotFoundException;
 
