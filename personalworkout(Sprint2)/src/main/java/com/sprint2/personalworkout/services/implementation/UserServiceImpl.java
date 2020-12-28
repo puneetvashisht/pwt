@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
 	@Override
-	public User addUser(User user) throws UserAlreadyExistsException, ValidationException {
+	public User addUser(User user){
 		final String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 		String password = user.getPassword();
 		String email = user.getEmail();
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User login(@RequestBody User user) throws ValidationException {
+	public User login(@RequestBody User user){
 		String email = user.getEmail();
 		String password = user.getPassword();
 		User user2 = userRepository.findByEmailAndPassword(email, password);
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<User> findUserById(int id) throws UserNotFoundException {
+	public Optional<User> findUserById(int id){
 		Optional<User> existingUser = userRepository.findById(id);
 		if (!existingUser.isPresent()) {
 			logger.warn("User Not Found");
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByEmail(String email) throws UserNotFoundException {
+	public User findByEmail(String email){
 		User existingUser = userRepository.findByEmail(email);
 		if (existingUser != null) {
 			return existingUser;
@@ -106,19 +106,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(int userId) throws UserNotFoundException {
+	public Optional<User> deleteUser(int userId){
 		Optional<User> existingUser = userRepository.findById(userId);
 		if (!existingUser.isPresent()) {
 			logger.warn("User does not exists!!");
 			throw new UserNotFoundException("User does not exists!!");
 		} else {
 			userRepository.deleteById(userId);
+			return existingUser;
 		}
 	}
 
 	@Override
 	@Transactional
-	public User updateUser(@RequestBody User user) throws UserNotFoundException {
+	public User updateUser(@RequestBody User user){
 		User updatedUser = userRepository.findByEmail(user.getEmail());
 		if (user.getWeight() != 0) {
 			updatedUser.setWeight(user.getWeight());

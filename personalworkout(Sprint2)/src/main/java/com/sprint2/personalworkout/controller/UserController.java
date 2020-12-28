@@ -3,6 +3,7 @@ package com.sprint2.personalworkout.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.sprint2.personalworkout.entity.User;
-import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
 import com.sprint2.personalworkout.exception.UserNotFoundException;
-import com.sprint2.personalworkout.exception.ValidationException;
 import com.sprint2.personalworkout.repository.UserRepository;
 import com.sprint2.personalworkout.services.implementation.UserServiceImpl;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
@@ -45,15 +46,12 @@ public class UserController {
 	/**
 	 * This  method is used to Added the User
 	 * @param user
-	 * @return
-	 * @throws ValidationException
-	 * @throws UserAlreadyExistsException
+	 * @return	
 	 */
 
 	@PostMapping("/users")
 	@ApiOperation(value = "Adding the User", notes = "Enter all values to add the user", response = User.class)
-	public ResponseEntity<String> addUser(@RequestBody User user)
-			throws ValidationException, UserAlreadyExistsException {
+	public ResponseEntity<String> addUser(@RequestBody User user){
 		User users = userService.addUser(user);
 		if (users != null) {
 			return new ResponseEntity<>("successfully registered user!!", HttpStatus.CREATED);
@@ -65,14 +63,12 @@ public class UserController {
 	/**
 	 * This method is used for users to Login
 	 * @param userObj
-	 * @return
-	 * @throws ValidationException 
+	 * @return	 
 	 */
 
 	@PostMapping("/users/login")
 	@ApiOperation(value = "User Login", notes = "Enter your credentials", response = User.class)
-	public ResponseEntity<String> login(
-			@ApiParam(value = "Enter your Details", required = true) @RequestBody User userObj) throws ValidationException {
+	public ResponseEntity<String> login(@ApiParam(value = "Enter your Details", required = true) @RequestBody User userObj){
 		User user = userService.login(userObj);
 		if (user != null) {
 			return new ResponseEntity<>("Successfully Logged in", HttpStatus.OK);
@@ -84,17 +80,15 @@ public class UserController {
 	/**
 	 * This method is used to get the User by Id
 	 * @param id
-	 * @return
-	 * @throws UserNotFoundException
+	 * @return	
 	 */
 	
 	@GetMapping("/users/{id}")
 	@ApiOperation(value = "Getting the User By Id", notes = "Enter your UserId", response = User.class)
 	public ResponseEntity<Optional<User>> getUserById(
-			@ApiParam(value = "Enter your Id", required = true)@PathVariable("id") int id)
-			throws UserNotFoundException {
+			@ApiParam(value = "Enter your Id", required = true)@PathVariable("id") int id){
 		ResponseEntity<Optional<User>> response;
-		logger.info("Recieved id on path: " + id);
+		logger.info("Recieved id on path: ");
 		Optional<User> user = userService.findUserById(id);
 		if (user.isPresent()) {
 			response = new ResponseEntity<>(user, HttpStatus.OK);
@@ -107,15 +101,13 @@ public class UserController {
 	/**
 	 * This method is used to get the User by Email
 	 * @param email
-	 * @return
-	 * @throws UserNotFoundException
+	 * @return	
 	 */
 	
 	@GetMapping("/users/email")
 	@ApiOperation(value = "Getting the User By Email", notes = "Enter your Email", response = User.class)
 	public ResponseEntity<User> getUserByEmail(
-			@ApiParam(value = "Enter your Email", required = true)@RequestParam("email") String email)
-			throws UserNotFoundException {
+			@ApiParam(value = "Enter your Email", required = true)@RequestParam("email") String email){
 		User existingUser = userService.findByEmail(email);
 		if (existingUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -125,7 +117,7 @@ public class UserController {
 
 	/**
 	 * This method is used to view All Users
-	 * @return
+	 * @return List of users
 	 */
 	
 	@GetMapping("/users")
@@ -141,16 +133,12 @@ public class UserController {
 
 	/**
 	 * This method is used to Delete the User by Id
-	 * @param id
-	 * @return
-	 * @throws UserNotFoundException
+	 * @param id	 
 	 */
 	
 	@DeleteMapping("/users/{id}")
 	@ApiOperation(value = "Deleting a User By Id", notes = "Enter your UserId", response = User.class)
-	public ResponseEntity<String> deleteUser(
-			@ApiParam(value = "Enter your userId", required = true) @PathVariable("id") int id)
-			throws UserNotFoundException {
+	public ResponseEntity<String> deleteUser(@ApiParam(value = "Enter your userId", required = true) @PathVariable("id") int id){
 		userService.deleteUser(id);
 		return new ResponseEntity<>("Successfully Deleted", HttpStatus.OK);
 	}
@@ -164,10 +152,8 @@ public class UserController {
 	
 	@PutMapping("/users")
 	@ApiOperation(value = "Editing a User", notes = "Enter your all values including edited values", response = User.class)
-	public ResponseEntity<User> updateUser(@ApiParam(value = "Enter your Details", required = true) @RequestBody User userObj)
-			throws UserNotFoundException {
+	public ResponseEntity<User> updateUser(@ApiParam(value = "Enter your Details", required = true) @RequestBody User userObj){
 		User user = userService.updateUser(userObj);
 		return new ResponseEntity<>(user, HttpStatus.CREATED);
 	}
-
 }

@@ -20,7 +20,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
 	@Autowired
 	WorkoutRepository workoutRepository;
-	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
+	private static Logger logger = LogManager.getLogger(WorkoutServiceImpl.class);
 
 
 	@Override

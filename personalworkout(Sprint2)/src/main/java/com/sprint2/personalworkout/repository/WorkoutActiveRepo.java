@@ -11,12 +11,12 @@ import com.sprint2.personalworkout.entity.WorkoutActiveTracker;
 public interface WorkoutActiveRepo extends JpaRepository<WorkoutActiveTracker, Integer> {
 
 	@Query("select w from WorkoutActiveTracker w where w.userEmail=?1")
-	public WorkoutActiveTracker findByEmail(String email);
+	 WorkoutActiveTracker findByEmail(String email);
 
 	@Query("select w from Workout w where w.title=?1")
-	public Workout getCbpm(String name);
+	 Workout getCbpm(String name);
 
 	@Query("select w from WorkoutActiveTracker w where w.startDate=?1")
-	public List<WorkoutActiveTracker> findByDate(String date);
+	 List<WorkoutActiveTracker> findByDate(String date);
 
 }

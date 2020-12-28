@@ -1,6 +1,5 @@
 package com.sprint2.personalworkout.services.implementation;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -10,8 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sprint2.personalworkout.entity.*;
-import com.sprint2.personalworkout.exception.*;
+
+import com.sprint2.personalworkout.entity.User;
+import com.sprint2.personalworkout.entity.Workout;
+import com.sprint2.personalworkout.entity.WorkoutActiveTracker;
+import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
+import com.sprint2.personalworkout.exception.UserNotFoundException;
+import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
 import com.sprint2.personalworkout.repository.WorkoutActiveRepo;
 import com.sprint2.personalworkout.services.UserService;
 import com.sprint2.personalworkout.services.WorkoutActiveService;
@@ -29,11 +33,11 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	@Autowired
 	WorkoutService workoutService;
 	
-	private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
+	private static Logger logger = LogManager.getLogger(WorkoutActiveServiceImpl.class);
 
 
 	@Override
-	public WorkoutActiveTracker assigningWorkout(int userId, int workoutId)throws UserNotFoundException, UserAlreadyExistsException, WorkoutNotFoundException {
+	public WorkoutActiveTracker assigningWorkout(int userId, int workoutId){
 		Optional<User> user = userService.findUserById(userId);
 		Optional<Workout> work = workoutService.findWorkoutById(workoutId);
 		Workout workoutObj;
@@ -76,7 +80,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	}
 	
 	@Override
-	public void startWorkoutById(int id) throws UserNotFoundException, WorkoutNotFoundException {
+	public void startWorkoutById(int id){
 		Optional<WorkoutActiveTracker> track = activeRepository.findById(id);
 		if (track.isPresent()) {
 			WorkoutActiveTracker isFound = track.get();
@@ -100,7 +104,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 
 	}
 	@Override
-	public void endWorkoutById(int id) throws ParseException,UserNotFoundException, WorkoutNotFoundException {
+	public void endWorkoutById(int id) {
 		Optional<WorkoutActiveTracker> track = activeRepository.findById(id);
 		if (track.isPresent()) {
 			WorkoutActiveTracker isFound = track.get();
@@ -134,7 +138,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 
 	
 	@Override
-	public WorkoutActiveTracker findByEmail(String email) throws UserNotFoundException {
+	public WorkoutActiveTracker findByEmail(String email){
 		WorkoutActiveTracker found = activeRepository.findByEmail(email);
 		if (found != null) {
 			return found;
@@ -146,7 +150,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	}
 
 	@Override
-	public WorkoutActiveTracker findById(int id) throws UserNotFoundException {
+	public WorkoutActiveTracker findById(int id){
 		Optional<WorkoutActiveTracker> existingUser = activeRepository.findById(id);
 		if (existingUser.isPresent()) {
 			return existingUser.get();
@@ -158,7 +162,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	}
 
 	@Override
-	public void deleteUserById(int id) throws UserNotFoundException {
+	public void deleteUserById(int id){
 		Optional<WorkoutActiveTracker> existingUser = activeRepository.findById(id);
 		if (!existingUser.isPresent()) {
 			logger.warn("User does not exists!!");
@@ -169,7 +173,7 @@ public class WorkoutActiveServiceImpl implements WorkoutActiveService {
 	}
 
 	
-	public List<WorkoutActiveTracker> findByDate(String date) throws  WorkoutNotFoundException{
+	public List<WorkoutActiveTracker> findByDate(String date){
 		List<WorkoutActiveTracker>  details =  activeRepository.findByDate(date);
 		if(details.isEmpty()) {
 			logger.warn("No workouts has been assigned or started in this date");

@@ -10,20 +10,20 @@ import com.sprint2.personalworkout.entity.Workout;
 @EnableJpaRepositories
 public interface WorkoutRepository extends JpaRepository<Workout, Integer> {
 
-	public Workout findByTitle(String title);
+	 Workout findByTitle(String title);
 
 	@Query("Select w from Workout w where w.title=?1")
-	public Optional<Workout> findByUpdateTitle(String title);
+	 Optional<Workout> findByUpdateTitle(String title);
 
 	@Query("select c from Category c where c.cname=?1")
-	public Category findCategory(String cname);
+	 Category findCategory(String cname);
 
 	@Query("select w from Workout w where w.id=?1")
-	public Workout findWorkout(int id);
+	 Workout findWorkout(int id);
 
 	@Query("select w from Workout w where w.id=?1")
-	public Optional<Workout> findWorkouts(int id);
+	 Optional<Workout> findWorkouts(int id);
 
-	public Workout save(Optional<Workout> updatedWorkout);
+	 Workout save(Optional<Workout> updatedWorkout);
 
 }

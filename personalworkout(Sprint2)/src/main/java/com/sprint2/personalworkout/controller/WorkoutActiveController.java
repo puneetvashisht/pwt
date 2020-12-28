@@ -70,7 +70,7 @@ public class WorkoutActiveController {
 	@PatchMapping("/activeworkouts/startworkout/{id}")
 	@ApiOperation(value = "Start the workout by id", notes = "Enter the id to start", response = WorkoutActiveTracker.class)
 	public ResponseEntity<String> startWorkoutById(@PathVariable("id") int id)throws UserNotFoundException, WorkoutNotFoundException {
-		logger.info("Recieved id on path: " + id);
+		logger.info("Recieved id on path:");
 		activeService.startWorkoutById(id);
 		return new ResponseEntity<>("Workout Started Successfully!!", HttpStatus.OK);
 	}
@@ -86,11 +86,9 @@ public class WorkoutActiveController {
 	
 	@PatchMapping("/activeworkouts/endworkout/{id}")
 	@ApiOperation(value = "End the workout by id", notes = "Enter the id to end", response = WorkoutActiveTracker.class)
-	public ResponseEntity<String> endWorkoutById(@PathVariable("id") int id)
-			throws ParseException, UserNotFoundException, WorkoutNotFoundException {
+	public ResponseEntity<String> endWorkoutById(@PathVariable("id") int id){
 		activeService.endWorkoutById(id);
 		return new ResponseEntity<>("Workout Ended Successfully!!", HttpStatus.OK);
-
 	}
 
 	/**

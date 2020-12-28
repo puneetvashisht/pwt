@@ -2,25 +2,22 @@ package com.sprint2.personalworkout.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.sprint2.personalworkout.entity.User;
-import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
-import com.sprint2.personalworkout.exception.UserNotFoundException;
-import com.sprint2.personalworkout.exception.ValidationException;
+
 
 public interface UserService {
 
-	public User addUser(User user) throws UserAlreadyExistsException, ValidationException;
+	 User addUser(User user);
 
-	public User login(User user) throws ValidationException;
+	 User login(User user);
 
-	public Optional<User> findUserById(int id) throws UserNotFoundException;
+	 Optional<User> findUserById(int id);
 
-	public User findByEmail(String email) throws UserNotFoundException;
+	 User findByEmail(String email);
 
-	public List<User> findAll();
+	 List<User> findAll();
 
-	public User updateUser(User user) throws UserNotFoundException;
+	 User updateUser(User user);
 
-	public void deleteUser(int id) throws UserNotFoundException;
+	 Optional<User> deleteUser(int id);
 }

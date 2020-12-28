@@ -41,6 +41,16 @@ public class User {
 		this.weight = user.weight;
 	}
 	
+	public User(int id,String email, String password, int height, int weight, Role role) {
+		super();
+		this.id=id;
+		this.email = email;
+		this.password = password;
+		this.height = height;
+		this.weight = weight;
+		this.role = role;
+	}	
+	
 	public User(String email, String password, int height, int weight, Role role) {
 		super();
 		this.email = email;

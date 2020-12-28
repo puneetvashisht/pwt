@@ -1,22 +1,21 @@
 package com.sprint2.personalworkout.services;
 
-import com.sprint2.personalworkout.exception.WorkoutAlreadyExistsException;
-import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
-import com.sprint2.personalworkout.entity.Workout;
 import java.util.List;
 import java.util.Optional;
 
+import com.sprint2.personalworkout.entity.Workout;
+
 public interface WorkoutService {
 
-	public Workout addWorkout(Workout workout) throws WorkoutAlreadyExistsException;
+	 Workout addWorkout(Workout workout);
 
-	public Optional<Workout> findWorkoutById(int id) throws WorkoutNotFoundException;
+	 Optional<Workout> findWorkoutById(int id);
 
-	public Workout findByTitle(String title) throws WorkoutNotFoundException;
+	 Workout findByTitle(String title);
 
-	public List<Workout> findAll();
+	 List<Workout> findAll();
 
-	public Workout updateWorkout(Workout workout) throws WorkoutNotFoundException;
+	 Workout updateWorkout(Workout workout);
 
-	public void deleteWorkout(int id) throws WorkoutNotFoundException;
+	 void deleteWorkout(int id);
 }

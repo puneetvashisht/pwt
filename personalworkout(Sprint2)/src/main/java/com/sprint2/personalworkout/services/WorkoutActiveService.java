@@ -1,24 +1,21 @@
 package com.sprint2.personalworkout.services;
 
-import java.text.ParseException;
 import java.util.List;
-import com.sprint2.personalworkout.entity.*;
-import com.sprint2.personalworkout.exception.UserAlreadyExistsException;
-import com.sprint2.personalworkout.exception.UserNotFoundException;
-import com.sprint2.personalworkout.exception.WorkoutNotFoundException;
+
+import com.sprint2.personalworkout.entity.WorkoutActiveTracker;
 
 public interface WorkoutActiveService {
-	public WorkoutActiveTracker assigningWorkout(int userId, int workoutId)throws UserNotFoundException, UserAlreadyExistsException, WorkoutNotFoundException;
+	 WorkoutActiveTracker assigningWorkout(int userId, int workoutId);
 
-	public void startWorkoutById(int id) throws UserNotFoundException, WorkoutNotFoundException;
+	 void startWorkoutById(int id);
 
-	public void endWorkoutById(int id) throws UserNotFoundException, WorkoutNotFoundException, ParseException;
+	 void endWorkoutById(int id);
 
-	public WorkoutActiveTracker findByEmail(String email) throws UserNotFoundException;
+	 WorkoutActiveTracker findByEmail(String email);
 
-	public WorkoutActiveTracker findById(int id) throws UserNotFoundException;
+	 WorkoutActiveTracker findById(int id);
 
-	public void deleteUserById(int id) throws UserNotFoundException;
+	 void deleteUserById(int id);
 
-	public List<WorkoutActiveTracker> findByDate(String date) throws WorkoutNotFoundException;
+	 List<WorkoutActiveTracker> findByDate(String date);
 }
